@@ -7,7 +7,6 @@ public partial class Global : Node
     public int XPAmount { get; set; }//Adicionar n+1 quando um enemy morrer
     public int MaxXPAmount { get; private set; } = 100;
     public Action<GlobalParameters> OnLevelUp { get; set; }
-    public Action<GlobalParameters> TellPlayerOnLevelUp { get; set; }
 
     public PlayerStatistics PlayerStatistics { get; private set; } = new PlayerStatistics();  //Usado pelo DifficultyAI apenas
 

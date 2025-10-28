@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://usf60amh3q40"]
+[gd_scene load_steps=4 format=3 uid="uid://usf60amh3q40"]
 
 [ext_resource type="Script" path="res://components/PlayerGhost/PlayerGhost.cs" id="1_e81su"]
 [ext_resource type="SpriteFrames" uid="uid://blqjl1crevxg5" path="res://components/PlayerGhost/ghost_player_sprite_frames.tres" id="2_at6bg"]
-[ext_resource type="Script" path="res://components/Models/PlayerParameters.cs" id="3_5m2we"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t6yh6"]
 radius = 7.0
@@ -21,4 +20,3 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="PlayerParameters" type="Node" parent="."]
-script = ExtResource("3_5m2we")
