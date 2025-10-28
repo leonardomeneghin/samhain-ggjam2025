@@ -1,11 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr2pbbwdoqsgs"]
+[gd_scene load_steps=4 format=3 uid="uid://cr2pbbwdoqsgs"]
 
 [ext_resource type="Script" path="res://components/EnemySpawner/EnemySpawner.cs" id="1_kbm7y"]
 [ext_resource type="PackedScene" uid="uid://bonnakm1mwmol" path="res://components/EnemyObjects/EnemyLight.tscn" id="2_xq33a"]
+[ext_resource type="Script" path="res://components/DynamicDifficultyAdjustAI/DifficultyAI.cs" id="3_d8qx6"]
 
-[node name="EnemySpawner" type="Node2D"]
+[node name="EnemySpawner" type="Node2D" node_paths=PackedStringArray("DDAIMechanic")]
 script = ExtResource("1_kbm7y")
 EnemyScene = ExtResource("2_xq33a")
+DDAIMechanic = NodePath("DifficultyAI")
+
+[node name="DifficultyAI" type="Node" parent="."]
+script = ExtResource("3_d8qx6")
 
 [node name="SpawnTimer" type="Timer" parent="."]
 autostart = true

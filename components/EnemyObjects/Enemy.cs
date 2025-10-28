@@ -14,8 +14,8 @@ public partial class Enemy : CharacterBody2D
     public override void _Process(double delta)
     {
         //Test enemy movement and spawn
-        //Position = Position.MoveToward(GetGlobalMousePosition(), 3.0f);
-        //MoveAndSlide();
+        Position = Position.MoveToward(GetGlobalMousePosition(), 3.0f);
+        MoveAndSlide();
         base._Process(delta);
     }
     public void AddParametersMultiplier(EnemyParametersModel parameters)

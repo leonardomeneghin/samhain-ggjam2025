@@ -4,15 +4,15 @@
 [ext_resource type="Script" path="res://Main.cs" id="1_y407y"]
 [ext_resource type="PackedScene" uid="uid://bonnakm1mwmol" path="res://components/EnemyObjects/EnemyLight.tscn" id="2_28tke"]
 [ext_resource type="PackedScene" uid="uid://cr2pbbwdoqsgs" path="res://components/EnemySpawner/enemy_spawner.tscn" id="3_4778f"]
+[ext_resource type="Script" path="res://components/EnemyObjects/enemy_light.gd" id="4_gf55m"]
 [ext_resource type="PackedScene" uid="uid://dwmjc02u1n5i6" path="res://components/Mausoleu/Mausoleu.tscn" id="4_yr3dy"]
 [ext_resource type="PackedScene" uid="uid://usf60amh3q40" path="res://components/PlayerGhost/PlayerGhost.tscn" id="5_bnoiw"]
-[ext_resource type="Script" path="res://components/DynamicDifficultyAdjustAI/DifficultyAI.cs" id="5_goh8p"]
 
 [node name="main" type="Node2D"]
 script = ExtResource("1_y407y")
 
 [node name="Cova" parent="." instance=ExtResource("1_htk3j")]
-position = Vector2(555, 199)
+position = Vector2(555, 197)
 
 [node name="Cova2" parent="." instance=ExtResource("1_htk3j")]
 position = Vector2(556, 308)
@@ -20,14 +20,11 @@ position = Vector2(556, 308)
 [node name="Cova3" parent="." instance=ExtResource("1_htk3j")]
 position = Vector2(554, 418)
 
-[node name="EnemyLight" parent="." instance=ExtResource("2_28tke")]
+[node name="Enemy" parent="." instance=ExtResource("2_28tke")]
 position = Vector2(996, 370)
+script = ExtResource("4_gf55m")
 
-[node name="EnemySpawner" parent="." node_paths=PackedStringArray("DDAIMechanic") instance=ExtResource("3_4778f")]
-DDAIMechanic = NodePath("DifficultyAI")
-
-[node name="DifficultyAI" type="Node" parent="EnemySpawner"]
-script = ExtResource("5_goh8p")
+[node name="EnemySpawner" parent="." instance=ExtResource("3_4778f")]
 
 [node name="Mausoleu" parent="." instance=ExtResource("4_yr3dy")]
 position = Vector2(300, 331)

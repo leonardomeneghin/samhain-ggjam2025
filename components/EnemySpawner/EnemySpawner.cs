@@ -9,7 +9,7 @@ public partial class EnemySpawner : Node2D
     [Export] public float SpawnInterval = 2.0f; // Tempo entre spawns
     [Export] public int MaxEnemies = 10; // Limite de inimigos simultâneos
     [Export] public float DifficultyScale = 1.05f; // Escala de dificuldade por ciclo
-    [Export] public DifficultyAI DDAIMechanic;
+    [Export] public DifficultyAI DDAIMechanic;  
 
 
     private EnemyParametersModel _enemyParameters;
@@ -17,6 +17,7 @@ public partial class EnemySpawner : Node2D
     private List<Node2D> _activeEnemies;
     private int _wave = 1;
     private Rect2 ExpandedSpawnArea;
+    private PlayerStatistics _playerStats;
 
     public override void _Ready()
     {
@@ -31,6 +32,7 @@ public partial class EnemySpawner : Node2D
         _enemyParameters = new EnemyParametersModel();
         DDAIMechanic.OnDifficultyChange += OnDifficultyChanged;
 
+        _playerStats = new PlayerStatistics();
         base._Ready();
     }
 
@@ -42,7 +44,6 @@ public partial class EnemySpawner : Node2D
         {
             SpawnEnemy();
         }
-
         _wave++;
         SpawnInterval = Mathf.Max(0.5f, SpawnInterval/DifficultyScale);
         _spawnTimer.WaitTime = SpawnInterval;
@@ -90,5 +91,9 @@ public partial class EnemySpawner : Node2D
     { 
         MaxEnemies = Math.Clamp(MaxEnemies + Convert.ToInt32(_enemyParameters.MaxEnemyMultiplier), MaxEnemies, int.MaxValue);
         _enemyParameters.ApplicarDificuldade(difficulty);
+    }
+    public void WhenAllEnemyDies()
+    {
+
     }
 }
