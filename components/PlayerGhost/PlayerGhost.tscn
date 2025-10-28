@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://usf60amh3q40"]
+
+[ext_resource type="Script" path="res://components/PlayerGhost/PlayerGhost.cs" id="1_e81su"]
+[ext_resource type="SpriteFrames" uid="uid://blqjl1crevxg5" path="res://components/PlayerGhost/ghost_player_sprite_frames.tres" id="2_at6bg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t6yh6"]
+radius = 7.0
+height = 20.0
+
+[node name="PlayerGhost" type="CharacterBody2D"]
+position = Vector2(153, 76)
+script = ExtResource("1_e81su")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_t6yh6")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("2_at6bg")
+animation = &"idle"
+autoplay = "idle"

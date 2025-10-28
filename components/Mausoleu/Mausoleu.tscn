@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwmjc02u1n5i6"]
+
+[ext_resource type="Texture2D" uid="uid://v4m8uog2d3kv" path="res://icon.svg" id="1_dpc3c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u58c3"]
+size = Vector2(75, 85)
+
+[node name="Mausoleu" type="StaticBody2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.609375, 0.671875)
+texture = ExtResource("1_dpc3c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u58c3")

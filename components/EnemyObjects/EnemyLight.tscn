@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bonnakm1mwmol"]
+
+[ext_resource type="SpriteFrames" uid="uid://blqjl1crevxg5" path="res://components/PlayerGhost/ghost_player_sprite_frames.tres" id="1_goq3w"]
+[ext_resource type="Script" path="res://components/EnemyObjects/EnemyLight.cs" id="1_pvngd"]
+[ext_resource type="Script" path="res://components/EnemyObjects/Parameters.cs" id="2_1j6lg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_m5afj"]
+radius = 7.0
+height = 20.0
+
+[node name="EnemyLight" type="CharacterBody2D"]
+script = ExtResource("1_pvngd")
+
+[node name="Parameters" type="Node" parent="."]
+script = ExtResource("2_1j6lg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_m5afj")
+
+[node name="Animation" type="AnimatedSprite2D" parent="."]
+modulate = Color(0, 0.0196078, 1, 1)
+sprite_frames = ExtResource("1_goq3w")
+animation = &"idle"
+autoplay = "idle"
