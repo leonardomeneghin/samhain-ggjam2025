@@ -99,7 +99,7 @@ public partial class EnemySpawner : Node2D
         _enemyParameters.ApplicarDificuldade(difficulty);
         DifficultyScale = difficulty;
     }
-    public async Task WhenAllEnemyDies()
+    public void WhenAllEnemyDies()
     {
         _spawnTimer.Stop();
         DifficultyAI.UpdateStats(Global.Instance.PlayerStatistics);
