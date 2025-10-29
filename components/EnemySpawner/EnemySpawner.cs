@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Godot;
 using samhain.components.DynamicDifficultyAdjustAI;
 
@@ -92,19 +93,22 @@ public partial class EnemySpawner : Node2D
         _activeEnemies.Add(enemy);
     }
     public void OnDifficultyChanged(float difficulty)
-    { 
+    {
+        GD.Print("Difficulty changed:", difficulty);
         MaxEnemies = Math.Clamp(MaxEnemies + Convert.ToInt32(_enemyParameters.MaxEnemyMultiplier), MaxEnemies, int.MaxValue);
         _enemyParameters.ApplicarDificuldade(difficulty);
         DifficultyScale = difficulty;
     }
-    public void WhenAllEnemyDies()
+    public async Task WhenAllEnemyDies()
     {
+        _spawnTimer.Stop();
         DifficultyAI.UpdateStats(Global.Instance.PlayerStatistics);
         //Inicia a feature do yuri
-
+        GD.Print("AllEnemies Died");
         //Ajuste do intervalo do timer de acordo com a escala da dificuldade
         _wave++;
         SpawnInterval = Mathf.Max(0.5f, SpawnInterval / DifficultyScale);
         _spawnTimer.WaitTime = SpawnInterval;
+        _spawnTimer.Start();
     }
 }
