@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Godot;
 using samhain.components.DynamicDifficultyAdjustAI;
 
 public partial class EnemySpawner : Node2D
 {
     [Export] public PackedScene EnemyScene; // Referência à cena do inimigo
-    [Export] public float SpawnInterval = 2.0f; // Tempo entre spawns
+    [Export] public float SpawnInterval = 4.0f; // Tempo entre spawns
     [Export] public int MaxEnemies = 10; // Limite de inimigos simultâneos
     [Export] public float DifficultyScale = 1.05f; // Escala de dificuldade por ciclo
-    [Export] public DifficultyAI DDAIMechanic;  
+    [Export] public DifficultyAI DifficultyAI;  
 
 
     private EnemyParametersModel _enemyParameters;
@@ -30,10 +31,17 @@ public partial class EnemySpawner : Node2D
         _spawnTimer.Start();
         
         _enemyParameters = new EnemyParametersModel();
-        DDAIMechanic.OnDifficultyChange += OnDifficultyChanged;
+        if(DifficultyAI  != null)
+            DifficultyAI.OnDifficultyChange += OnDifficultyChanged;
 
-        _playerStats = new PlayerStatistics();
+
+        _playerStats = Global.Instance.PlayerStatistics;
         base._Ready();
+    }
+    public override void _Process(double delta)
+    {
+        if (_activeEnemies.Count == 0) WhenAllEnemyDies();
+        base._Process(delta);
     }
 
     private void OnSpawnTimeout()
@@ -44,9 +52,6 @@ public partial class EnemySpawner : Node2D
         {
             SpawnEnemy();
         }
-        _wave++;
-        SpawnInterval = Mathf.Max(0.5f, SpawnInterval/DifficultyScale);
-        _spawnTimer.WaitTime = SpawnInterval;
     }
     Vector2 GetRandomPointOnPerimeter(Rect2 rect)
     {
@@ -88,12 +93,22 @@ public partial class EnemySpawner : Node2D
         _activeEnemies.Add(enemy);
     }
     public void OnDifficultyChanged(float difficulty)
-    { 
+    {
+        GD.Print("Difficulty changed:", difficulty);
         MaxEnemies = Math.Clamp(MaxEnemies + Convert.ToInt32(_enemyParameters.MaxEnemyMultiplier), MaxEnemies, int.MaxValue);
         _enemyParameters.ApplicarDificuldade(difficulty);
+        DifficultyScale = difficulty;
     }
     public void WhenAllEnemyDies()
     {
-
+        _spawnTimer.Stop();
+        DifficultyAI.UpdateStats(Global.Instance.PlayerStatistics);
+        //Inicia a feature do yuri
+        GD.Print("AllEnemies Died");
+        //Ajuste do intervalo do timer de acordo com a escala da dificuldade
+        _wave++;
+        SpawnInterval = Mathf.Max(0.5f, SpawnInterval / DifficultyScale);
+        _spawnTimer.WaitTime = SpawnInterval;
+        _spawnTimer.Start();
     }
 }
